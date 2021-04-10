@@ -18,7 +18,8 @@ const useStyles = makeStyles({
   bullet: {
     display: 'inline-block',
     margin: '0 2px',
-    transform: 'scale(0.8)',
+    transform: 'scale(4)',
+    color: "green"
   },
   title: {
     fontSize: 14,
@@ -32,8 +33,10 @@ const useStyles = makeStyles({
 });
 
 function Machine(m) {
+  const { machine } = m;
   const classes = useStyles();
   const [open, setOpen] = React.useState(false);
+  const bull = <span className={classes.bullet}>•</span>;
 
   const handleClick = () => {
     setOpen(!open);
@@ -45,13 +48,13 @@ function Machine(m) {
         <Card className={classes.root}>
             <CardContent>
             <Typography className={classes.title} color="textSecondary" gutterBottom>
-                {m.machine.Network}
+                {machine.Network}
             </Typography>
             <Typography variant="h5" component="h2">
-                {m.machine.Name}
+                {bull} {machine.Name}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
-                {m.machine.IP} -- {m.machine.OS}
+                {machine.IP} -- {machine.OS}
             </Typography>
             <Typography variant="body2" component="p">
               <List
@@ -63,7 +66,7 @@ function Machine(m) {
                 </ListItem>
 
                 <Collapse in={open} timeout="auto" unmountOnExit>
-                {m.machine.Services.map((s) => (
+                {machine.Services.map((s) => (
                     <List component="div" disablePadding>
                         <ListItem button className={classes.nested}>
                             <ListItemText primary={s} />
