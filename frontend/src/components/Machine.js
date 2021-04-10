@@ -66,13 +66,7 @@ function Machine(m) {
                 </ListItem>
 
                 <Collapse in={open} timeout="auto" unmountOnExit>
-                {machine.Services.map((s) => (
-                    <List component="div" disablePadding>
-                        <ListItem button className={classes.nested}>
-                            <ListItemText primary={s} />
-                        </ListItem>
-                    </List>
-                  ))}
+              
                 </Collapse>
                 </List>
                 </Typography>
@@ -80,5 +74,15 @@ function Machine(m) {
         </Card>
   );
 }
+
+/*
+                {machine.Services.map((s) => (
+                    <List component="div" disablePadding>
+                        <ListItem button className={classes.nested}>
+                            <ListItemText primary={s} />
+                        </ListItem>
+                    </List>
+                  ))}
+                  */
 
 export default Machine;
