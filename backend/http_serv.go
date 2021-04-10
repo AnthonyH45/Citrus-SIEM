@@ -46,7 +46,7 @@ func rejectReq(w http.ResponseWriter, r *http.Request) bool {
 	return false
 }
 
-func recvdata(w http.ResponseWriter, r *http.Request) {
+func RecvData(w http.ResponseWriter, r *http.Request) {
 	if rejectReq(w, r) {
 		return
 	}
@@ -84,7 +84,7 @@ func recvdata(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "Packages: %d\n", d.Packages)
 }
 
-func recvListeningPorts(w http.ResponseWriter, r *http.Request) {
+func RecvListeningPorts(w http.ResponseWriter, r *http.Request) {
 	if rejectReq(w, r) {
 		return
 	}
