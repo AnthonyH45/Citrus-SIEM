@@ -1,5 +1,5 @@
 import React from 'react';
-import Machines from './Machines'
+import Machine from './Machine'
 import { makeStyles } from '@material-ui/core/styles';
 import Grid from '@material-ui/core/Grid';
 // import FormLabel from '@material-ui/core/FormLabel';
@@ -25,32 +25,33 @@ function MGrid() { // machines) {
     const [spacing, setSpacing] = React.useState(2);
     const classes = useStyles();
 
-//   const handleChange = (event) => {
-//     setSpacing(Number(event.target.value));
-//   };
+  const handleChange = (event) => {
+    setSpacing(Number(event.target.value));
+  };
 
     const mmm = JSON.parse(`
         [{
             "Name": "test1",
             "IP": "1.1.1.1",
             "OS": "lunix",
+            "Network": "LAN-1",
             "Services": ["nginx", "mysql"]
         },
         {
             "Name": "test2",
             "IP": "1.1.1.1",
-            "OS": "lunix",
-            "Services": ["nginx", "mysql"]
+            "OS": "Windows",
+            "Network": "LAN-1",
+            "Services": ["apache", "docker"]
         },
         {
             "Name": "test3",
-            "IP": "1.1.1.1",
+            "IP": ".50",
             "OS": "lunix",
-            "Services": ["nginx", "mysql"]
+            "Network": "LAN-1",
+            "Services": ["BoatAPI", "Git"]
         }
     ]`)
-
-    console.log(mmm)
 
     return (
         <Grid container className={classes.root} spacing={2}>
@@ -59,7 +60,7 @@ function MGrid() { // machines) {
                     {mmm.map((ms) => (
                         <Grid item>
                             {/* <Paper className={classes.paper} /> */}
-                            <Machines machines={ms}/>
+                            <Machine machine={ms}/>
                         </Grid>
                     ))}
                 </Grid>
