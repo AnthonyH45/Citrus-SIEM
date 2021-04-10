@@ -2,7 +2,42 @@ import React from 'react';
 import MGrid from './components/MGrid'
 import './App.css';
 
+
+
 function App() { //networks) {
+  const [machines, setMachines] = React.setState({});
+
+  const socket = new WebSocket('ws://localhost:8080/ws');
+  socket.addEventListener('open', (e) => {
+      console.log('WS connected!');
+
+      socket.send(JSON.stringify({
+          type: 'ping',
+          data: {
+              nested: 'object'
+          },
+      }));
+  });
+
+  socket.addEventListener('message', (e) => {
+      console.log(`Received: ${e.data}`);
+
+      const data = JSON.parse(e.data);
+      switch (data.OP) {
+          case 'PING':
+              socket.send(JSON.stringify({
+                  type: 'PONG'
+              }));
+              break;
+      }
+  });
+
+  socket.addEventListener('close', () => {
+      alert('Websocket connection closed, refreshing page.')
+      // location.reload();
+  });
+
+  /*
   const mmm = JSON.parse(`
     [{
         "Name": "test1",
@@ -26,6 +61,8 @@ function App() { //networks) {
         "Services": ["BoatAPI", "Git"]
     }
   ]`)
+  */
+
   // https://developers.google.com/web/updates/2015/03/introduction-to-fetch
 //   const getMachineInfo = async () => {
 //     await fetch("https://javascript_worker.ahall012.workers.dev/links", {
@@ -39,6 +76,7 @@ function App() { //networks) {
 //     "method": "GET",
 //   });
 // }
+
   const url = 'https://a-weeb.site/api/proxy_cors?url=https://jsonrequest.anthonyhallak.repl.co/';
   const getMachineInfo = async () => {
     await fetch(url)
@@ -66,7 +104,7 @@ function App() { //networks) {
     <div className="App">
       <header className="App-header">
         <h1>LAN-1</h1>
-        <MGrid machines={mmm}/>
+        <MGrid machines={this.state.machines}/>
       </header>
     </div>
   );

@@ -20,7 +20,7 @@ var upgrader = websocket.Upgrader{
 	WriteBufferSize: 1024,
 }
 
-func wsEndpoint(rw http.ResponseWriter, r *http.Request) {
+func WSEndpoint(rw http.ResponseWriter, r *http.Request) {
 	conn, err := upgrader.Upgrade(rw, r, nil)
 	if err != nil {
 		log.Println("Error creating WS:", err)
@@ -32,7 +32,7 @@ func wsEndpoint(rw http.ResponseWriter, r *http.Request) {
 	wsReader(conn)
 }
 
-func cleanupClients() {
+func CleanupClients() {
 	const timeout float64 = 1
 
 	for {
