@@ -25,11 +25,14 @@ function MGrid(props) {
         <Grid container className={classes.root} spacing={2}>
             <Grid item xs={12}>
                 <Grid container justify="center" spacing={spacing}>
-                    {machines.map((ms) => (
-                        <Grid item>
-                            <Machine machine={ms}/>
-                        </Grid>
-                    ))}
+                    {Object.entries(machines).map(e => {
+                      const [k, v] = e;
+                      return (
+                        <Grid key={k} item>
+                        <Machine key={k} machine={v}/>
+                       </Grid>
+                      );
+                    })}
                 </Grid>
             </Grid>
         </Grid>  
