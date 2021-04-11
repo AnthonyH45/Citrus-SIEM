@@ -24,15 +24,16 @@ interface Props {
 export default function MGrid({inv, key}: Props) {
     const classes = useStyles();
 
+    console.log(inv)
+
     return (
         <Grid container className={classes.root} spacing={2} key={key}>
             <Grid item xs={12}>
                 <Grid container justify="center" spacing={3}>
-                    {Object.entries(inv).map(e => {
-                      const [k, v] = e;
+                    {inv.map(e => {
                       return (
-                        <Grid key={k} item>
-                          <Machine key={k} m={v}/>
+                        <Grid key={e.Ident} item>
+                          <Machine key={e.Ident} m={e}/>
                         </Grid>
                       );
                     })}

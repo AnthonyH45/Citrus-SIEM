@@ -20,8 +20,24 @@ export default function App() { //networks) {
     Hostname: "Hostname",
     IP: "IP",
     OS: "OS",
-    Services: ["Services?"]
+    On: "1",
+    Ident: "id"
   } as machine]);
+
+  const updateMachine = (mInfo: machine) => {
+    setMachines((prev: any) => { // supposed to be `: machine[]`
+      if (prev === undefined) prev = [];
+
+        for (let i = 0; i < prev.length; i++) {
+          if (prev[i].Ident === mInfo.Ident) {
+             prev[i] = mInfo;
+             return prev;
+          }
+        }
+        prev.push(mInfo);
+        return prev;
+    });
+  }
 
   socket.addEventListener('open', (e) => {
       console.log('WS connected!');
@@ -40,11 +56,11 @@ export default function App() { //networks) {
         break;
 
       case 'CURR_MACHINES':
-        setMachines(() => data.Data);
+        setMachines(() => Object.values(data.Data));
         break;
 
       case 'UPDATE_MACHINE':
-        setMachines((prev) => prev[data.Data.Ident] = data.Data);
+        updateMachine(data.Data);
         break;
 
       default:
@@ -52,11 +68,21 @@ export default function App() { //networks) {
       }
   });
 
+  console.log("HI")
+  console.log(ms)
+  console.log("IH")
+
   return (
     <div className="App">
       <header className="App-header">
         <h1>LAN-1</h1>
-        <MGrid inv={ms} key="MGrid"/>
+        {
+          (ms === undefined) ?
+         <h2>No machines added yet!</h2> 
+         : (ms.length === 0) ?
+         <h2>No machines added yet!</h2> 
+         : <MGrid inv={ms} key="MGrid"/>
+        }
       </header>
     </div>
   );

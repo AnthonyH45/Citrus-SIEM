@@ -37,7 +37,7 @@ export interface machine {
   IP: string,
   OS: string,
   On: "1" | "0",
-  Services?: string[]
+  Ident: string
 }
 
 interface Props {
@@ -47,6 +47,8 @@ interface Props {
 
 export default function Machine({key, m}: Props) {
   const classes = useStyles();
+
+  console.log(m)
 
   return (
     <Card className={classes.root} key={key}>

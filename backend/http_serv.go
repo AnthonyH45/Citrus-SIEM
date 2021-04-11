@@ -70,13 +70,13 @@ func RecvData(w http.ResponseWriter, r *http.Request) {
 	//set default post values
 	fill_defaults(&d)
 
-	d.IP = r.RemoteAddr[:strings.Index(r.RemoteAddr, ":")]
+	d.IP = r.RemoteAddr[:strings.LastIndex(r.RemoteAddr, ":")]
 	d.Ident = d.Hostname + "@" + d.IP
 	machines[d.Ident] = d
 
 	broadcast(Message{
 		"UPDATE_MACHINE",
-		r.Body,
+		d,
 	})
 
 	//resend post data for debugging purposes
