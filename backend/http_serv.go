@@ -34,6 +34,11 @@ func fill_defaults(std *HostData) {
 	if std.Packages == 0 {
 		std.Packages = -1
 	}
+
+	if std.On == "" {
+		std.On = "1"
+	}
+
 }
 
 func rejectReq(w http.ResponseWriter, r *http.Request) bool {
@@ -82,6 +87,7 @@ func RecvData(w http.ResponseWriter, r *http.Request) {
 	fmt.Fprintf(w, "OS: %s\n", d.OS)
 	fmt.Fprintf(w, "Release: %s\n", d.Release)
 	fmt.Fprintf(w, "Packages: %d\n", d.Packages)
+	fmt.Fprintf(w, "On?: %s\n", d.On)
 }
 
 func RecvListeningPorts(w http.ResponseWriter, r *http.Request) {

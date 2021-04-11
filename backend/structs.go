@@ -16,6 +16,7 @@ type HostData struct {
 	OS       string
 	Release  string
 	Packages int
+	On       string
 
 	Ident string // {Hostname}@{IP}
 }
