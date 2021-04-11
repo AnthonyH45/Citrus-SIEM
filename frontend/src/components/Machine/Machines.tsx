@@ -9,6 +9,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import Collapse from '@material-ui/core/Collapse';
 import ExpandLess from '@material-ui/icons/ExpandLess';
 import ExpandMore from '@material-ui/icons/ExpandMore';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import Accordion from '@material-ui/core/Accordion';
+import AccordionSummary from '@material-ui/core/AccordionSummary';
+import AccordionDetails from '@material-ui/core/AccordionDetails';
 
 const useStyles = makeStyles({
   root: {
@@ -96,19 +100,29 @@ export default function Machine({ m }: Props) {
                   <b>No connections reported yet</b>
                   : [(m.Services.map((s, i) => (
                     <List component="div" disablePadding>
-                      <ListItemText primary={i+1} secondary="Connection#"/>
-                        <ListItem className={classes.nested}>
-                            <ListItemText primary={s.LocalAddr} secondary="LocalAddr"/>
-                        </ListItem>
-                        <ListItem className={classes.nested}>
-                            <ListItemText primary={s.ForAddr} secondary="ForAddr"/>
-                        </ListItem>
-                        <ListItem className={classes.nested}>
-                            <ListItemText primary={s.ProgName} secondary="ProgName"/>
-                        </ListItem>
-                        <ListItem className={classes.nested}>
-                            <ListItemText primary={s.ConnType} secondary="ConnType"/>
-                        </ListItem>
+                      <Accordion>
+                                    <AccordionSummary
+                                      expandIcon={<ExpandMoreIcon />}
+                                      aria-controls="panel1a-content"
+                                      id="panel1a-header"
+                                    >
+                                      <Typography>Connection: {i+1}</Typography>
+                                    </AccordionSummary>
+                                    <AccordionDetails>
+                                    <ListItem className={classes.nested}>
+                                      <ListItemText primary={s.LocalAddr} secondary="LocalAddr"/>
+                                    </ListItem>
+                                    <ListItem className={classes.nested}>
+                                        <ListItemText primary={s.ForAddr} secondary="ForAddr"/>
+                                    </ListItem>
+                                    <ListItem className={classes.nested}>
+                                        <ListItemText primary={s.ProgName} secondary="ProgName"/>
+                                    </ListItem>
+                                    <ListItem className={classes.nested}>
+                                        <ListItemText primary={s.ConnType} secondary="ConnType"/>
+                                    </ListItem>
+                                    </AccordionDetails>
+                                    </Accordion>
                     </List>
                   ) ) )]}
                 </Collapse>
