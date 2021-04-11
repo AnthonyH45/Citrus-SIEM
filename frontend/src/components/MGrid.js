@@ -29,8 +29,8 @@ function MGrid(props) {
                       const [k, v] = e;
                       return (
                         <Grid key={k} item>
-                        <Machine key={k} machine={v}/>
-                       </Grid>
+                          <Machine key={k} machine={v}/>
+                        </Grid>
                       );
                     })}
                 </Grid>

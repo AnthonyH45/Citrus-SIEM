@@ -2,7 +2,7 @@ run:
 	go run main.go
 
 build:
-	cd frontend && yarn build && cp -r build/* ../backend/static
+	cd frontend && yarn build
 
 fmt:
 	go fmt ./main.go
