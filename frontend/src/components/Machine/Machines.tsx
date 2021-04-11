@@ -47,9 +47,6 @@ interface Props {
 
 export default function Machine({key, m}: Props) {
   const classes = useStyles();
-
-  console.log(m)
-
   return (
     <Card className={classes.root} key={key}>
       <CardContent>

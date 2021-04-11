@@ -4,7 +4,6 @@ import './App.css';
 
 import { machine } from './components/Machine';
 
-
 const socket = new WebSocket('ws://localhost:8080/ws');
 
 socket.addEventListener('open', (e) => {
@@ -15,40 +14,12 @@ socket.addEventListener('close', () => {
   console.log('Websocket connection closed, refreshing page.')
 });
 
-// function useForceUpdate(){
-//   const [value, setValue] = useState(0); // integer state
-//   return () => setValue(value => value + 1); // update the state to force render
-// }
-
 export default function App() { //networks) {
-  const [ms, setMachines] = React.useState([{
-    Uptime: "Uptime",
-    Hostname: "Hostname",
-    IP: "IP",
-    OS: "OS",
-    On: "1",
-    Ident: "id"
-  } as machine]);
-  
-  React.useEffect(() => {
-    setMachines(() => Object.values({}));
-  }, []);
+  const [ms, setMachines] = React.useState(new Map<string,machine>());
 
   const updateMachine = (mInfo: machine) => {
-    setMachines((prev: any) => { // supposed to be `: machine[]`
-      if (prev === undefined) prev = [];
-
-        for (let i = 0; i < prev.length; i++) {
-          if (prev[i].Ident === mInfo.Ident) {
-             prev[i] = mInfo;
-             return prev;
-          }
-        }
-        prev.push(mInfo);
-        console.log("Adding to array")
-        console.log(prev)
-        return prev;
-    });
+    ms.set(mInfo.Ident,mInfo);
+    setMachines(ms);
   }
 
   socket.addEventListener('message', (e) => {
@@ -64,8 +35,7 @@ export default function App() { //networks) {
         break;
 
       case 'CURR_MACHINES':
-        setMachines(() => Object.values(data.Data));
-        // useForceUpdate();
+        setMachines(ms);
         break;
 
       case 'UPDATE_MACHINE':
