@@ -1,7 +1,7 @@
 #!/bin/bash
 
-HOST="192.168.1.71"
-PORT="8000"
+HOST="jasonthel.in"
+PORT="8080"
 
 while true
 do

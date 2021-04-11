@@ -30,15 +30,6 @@ type GridState = {
 export default class MGrid extends Component<GridProps, GridState> {
   constructor(props: GridProps) {
     super(props);
-
-    /*
-    this.setState({
-      inv: props.inv,
-    });
-    */
-
-    console.log('from mgrid:');
-    console.log(this.props);
   }
 
   render() {
@@ -47,11 +38,9 @@ export default class MGrid extends Component<GridProps, GridState> {
           <Grid item xs={12}>
               <Grid container justify="center" spacing={3}>
                   {Array.from(this.props.inv).map((kv) => {
-                    const gridKey = `Grid_${kv[0]}`;
-                    const machineKey = `Machine_${kv[0]}`;
                     return (
-                      <Grid key={gridKey} item>
-                        <Machine key={machineKey} m={kv[1]}/>
+                      <Grid key={"Grid_"+kv[0]} item>
+                        <Machine key={"Machine_"+kv[0]} m={kv[1]}/>
                       </Grid>
                     );
                   })}
@@ -61,30 +50,3 @@ export default class MGrid extends Component<GridProps, GridState> {
     );
   }
 }
-
-/*
-export class MGrid extends React.Component {
-  
-    const classes = useStyles();
-
-    console.log(inv)
-
-    render() {
-      return (
-        <Grid container className={classes.root} spacing={2} key={key}>
-            <Grid item xs={12}>
-                <Grid container justify="center" spacing={3}>
-                    {inv.map(e => {
-                      return (
-                        <Grid key={e.Ident} item>
-                          <Machine key={e.Ident} m={e}/>
-                        </Grid>
-                      );
-                    })}
-                </Grid>
-            </Grid>
-        </Grid>  
-    );
-    }
-}
-*/

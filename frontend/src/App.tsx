@@ -7,7 +7,7 @@ import Machine, { machine } from './components/Machine';
 export default function App() { //networks) {
   const [ms, setMachines] = React.useState(new Map<string, machine>());
   
-  const socket = new WebSocket('ws://172.26.47.79:8080/ws'); // hehe
+  const socket = new WebSocket('ws://jasonthel.in:8080/ws'); // hehe
 
   React.useEffect(() => {
     socket.addEventListener('open', (e) => {
@@ -57,7 +57,7 @@ export default function App() { //networks) {
     <div className="App">
       <header className="App-header">
         <h1>LAN-1</h1>
-          <MGrid key="AAAA" inv={ms} />
+          <MGrid key="MGrid" inv={ms} />
       </header>
     </div>
   );

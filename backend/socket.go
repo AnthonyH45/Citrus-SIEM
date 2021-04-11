@@ -21,6 +21,7 @@ var upgrader = websocket.Upgrader{
 }
 
 func WSEndpoint(rw http.ResponseWriter, r *http.Request) {
+	upgrader.CheckOrigin = func(r *http.Request) bool { return true }
 	conn, err := upgrader.Upgrade(rw, r, nil)
 	if err != nil {
 		log.Println("Error creating WS:", err)
