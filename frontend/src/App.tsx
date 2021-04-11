@@ -17,7 +17,6 @@ export default function App() {
     socket.addEventListener('close', () => {
       console.log('Websocket connection closed, refreshing page.')
     });
-
     socket.addEventListener('open', (e) => {
       console.log('WS connected!');
     });

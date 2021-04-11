@@ -72,7 +72,6 @@ export default function Machine({ m }: Props) {
   const handleClick = () => {
     setOpen(!open);
   };
-
   return (
     <Card className={classes.root}>
       <CardContent>

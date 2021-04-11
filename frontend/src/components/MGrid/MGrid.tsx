@@ -40,3 +40,4 @@ export default function MGrid({invP, invS}: Props) {
       </Grid> 
     );
   }
+
