@@ -14,6 +14,7 @@ func main() {
 	http.Handle("/", http.FileServer(http.Dir("./backend/static")))
 
 	go backend.CleanupClients()
+	go backend.WatchMachinesForInactivity()
 
 	log.Fatal(http.ListenAndServe("0.0.0.0:8080", nil))
 }

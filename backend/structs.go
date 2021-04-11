@@ -1,5 +1,9 @@
 package backend
 
+import (
+	"time"
+)
+
 type Message struct {
 	OP   string
 	Data interface{}
@@ -18,7 +22,8 @@ type HostData struct {
 	Packages int
 	On       string
 
-	Ident string // {Hostname}@{IP}
+	Ident   string // {Hostname}@{IP}
+	Updated time.Time
 }
 
 type ActiveConn struct {

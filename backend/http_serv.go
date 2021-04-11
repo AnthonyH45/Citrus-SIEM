@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"time"
 )
 
 func fill_defaults(std *HostData) {
@@ -72,6 +73,7 @@ func RecvData(w http.ResponseWriter, r *http.Request) {
 
 	d.IP = r.RemoteAddr[:strings.LastIndex(r.RemoteAddr, ":")]
 	d.Ident = d.Hostname + "@" + d.IP
+	d.Updated = time.Now()
 	machines[d.Ident] = d
 
 	broadcast(Message{
