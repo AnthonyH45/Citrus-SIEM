@@ -58,7 +58,7 @@ func WatchMachinesForInactivity() {
 
 	for {
 		for _, data := range machines {
-			if time.Since(data.Updated).Seconds() >= timeout {
+			if data.On == "1" && time.Since(data.Updated).Seconds() >= timeout {
 				data.On = "0"
 				broadcast(Message{
 					"UPDATE_MACHINE",
