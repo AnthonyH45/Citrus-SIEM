@@ -7,9 +7,9 @@ import Machine, { machine } from './components/Machine';
 export default function App() { //networks) {
   const [ms, setMachines] = React.useState(new Map<string, machine>());
   
-  const socket = new WebSocket('ws://jasonthel.in:8080/ws'); // hehe
-
   React.useEffect(() => {
+    const socket = new WebSocket('ws://jasonthel.in:8080/ws');
+
     socket.addEventListener('open', (e) => {
       console.log('WS connected!');
     });

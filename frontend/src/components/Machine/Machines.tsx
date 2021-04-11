@@ -48,7 +48,7 @@ interface Props {
 export default function Machine(props: Props) {
   const classes = useStyles();
 
-  props.m.IP = props.m.IP.slice(0, props.m.IP.length - 4) + 'XXXX';
+  const ip = props.m.IP.slice(0, props.m.IP.length - 4) + 'XXXX';
 
   return (
     <Card className={classes.root}>
@@ -60,7 +60,7 @@ export default function Machine(props: Props) {
           <span className={(props.m.On === "1") ? classes.alive:classes.dead}>•</span> {props.m.Hostname}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          {props.m.IP} -- {props.m.OS}
+          {ip} -- {props.m.OS}
         </Typography>
       </CardContent>
     </Card>
