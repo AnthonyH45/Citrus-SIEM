@@ -92,11 +92,43 @@ func RecvListeningPorts(w http.ResponseWriter, r *http.Request) {
 	bodyBytes, _ := ioutil.ReadAll(r.Body)
 	body := string(bodyBytes)
 
-	// fmt.Println(body)
+	srv_idnty := strings.Split(body, "\n")[0]
 
-	fields := strings.Fields(body)
-	for _, field := range fields[:] {
-		fmt.Println(field)
+	switch srv_idnty {
+	case "Active Internet connections (only servers)":
+		fields := strings.Split(body, "\n")
+
+		var ActiveConnArr []ActiveConn
+
+		fields = append(fields[2:])
+		for _, field := range fields[:] {
+			var tmp ActiveConn
+			data := strings.Fields(field)
+			tmp.ProgName = data[6]
+			tmp.ForAddr = data[4]
+			tmp.LocalAddr = data[3]
+			tmp.ConnType = data[0] + ":" + data[5]
+			ActiveConnArr = append(ActiveConnArr, tmp)
+		}
+
+		fmt.Println(ActiveConnArr)
+	default:
+		fmt.Println("Data Not Recognized")
+
 	}
 
+	// fmt.Println(body)
+
+	//for 0 -> 14, it is garbage
+	//arr := strings.Split(body, "\n")
+
+	// if arr[0] == "Active" && arr[1] == "Internet" {
+	// 	fmt.Println("Netstat Detected")
+	// 	index := 0
+	// 	for _, field := range fields[:] {
+	// 		if(index>14) {
+
+	// 		}
+	// 	}
+	// }
 }

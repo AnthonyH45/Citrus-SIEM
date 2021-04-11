@@ -19,3 +19,10 @@ type HostData struct {
 
 	Ident string // {Hostname}@{IP}
 }
+
+type ActiveConn struct {
+	LocalAddr string
+	ForAddr   string
+	ProgName  string
+	ConnType  string
+}
