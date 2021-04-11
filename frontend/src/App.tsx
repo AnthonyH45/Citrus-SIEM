@@ -5,51 +5,19 @@ import './App.css';
 import { machine } from './components/Machine';
 
 const socket = new WebSocket('ws://localhost:8080/ws');
-
 socket.addEventListener('open', (e) => {
   console.log('WS connected!');
 });
-
 socket.addEventListener('close', () => {
   console.log('Websocket connection closed, refreshing page.')
 });
 
-// function useForceUpdate(){
-//   const [value, setValue] = React.useState(0); // integer state
-//   return () => setValue(value => value + 1); // update the state to force render
-// }
+interface f {
+  [inv: string]: machine
+}
 
-export default function App() { //networks) {
-
-  const [ms, setMachines] = React.useState([{
-    Uptime: "Uptime",
-    Hostname: "Hostname",
-    IP: "IP",
-    OS: "OS",
-    On: "1",
-    Ident: "id"
-  } as machine]);
-  
-  React.useEffect(() => {
-    setMachines(() => Object.values({}));
-  }, []);
-
-  const updateMachine = (mInfo: machine) => {
-    setMachines((prev: any) => { // supposed to be `: machine[]`
-      if (prev === undefined) prev = [];
-
-        for (let i = 0; i < prev.length; i++) {
-          if (prev[i].Ident === mInfo.Ident) {
-             prev[i] = mInfo;
-             return prev;
-          }
-        }
-        prev.push(mInfo);
-        console.log("Adding to array")
-        console.log(prev)
-        return prev;
-    });
-  }
+export default function App() {
+  const [ms, setMachines] = React.useState({"s": {Uptime: "", Hostname: "", IP: "", OS: "", On: "1", Ident: ""} as machine} as f);
 
   socket.addEventListener('message', (e) => {
     console.log(`Received: ${e.data}`);
@@ -64,11 +32,17 @@ export default function App() { //networks) {
         break;
 
       case 'CURR_MACHINES':
-        setMachines(() => Object.values(data.Data));
+        setMachines(
+          (prev: f) => {
+            return Object.assign(prev, {[data.Data.Ident]: data.Data.on}) as f} 
+        );
         break;
 
       case 'UPDATE_MACHINE':
-        updateMachine(data.Data);
+        setMachines(
+          (prev: f) => {
+            return Object.assign(prev, {[data.Data.Ident]: data.Data.on}) as f} 
+        );
         break;
 
       default:

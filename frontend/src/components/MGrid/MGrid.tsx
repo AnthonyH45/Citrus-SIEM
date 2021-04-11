@@ -17,21 +17,19 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 interface Props {
-  [inv: string]: machine[];
+  [inv: string]: machine;
 }
 
-export default function MGrid({inv, key}: Props) {
+export default function MGrid(props: Props) {
   const classes = useStyles();
 
-  if (inv.length === 0) return <h2>No machines added yet!</h2>;
-
-  console.log(inv)
+  if (!!!props.inv) return <h2>No machines added yet!</h2>;
 
   return (
       <Grid container className={classes.root} spacing={2}>
           <Grid item xs={12}>
               <Grid container justify="center" spacing={3}>
-                  {inv.map(e => {
+                  {Object.values(props.inv).map(e => {
                     return (
                       <Grid key={e.Ident+"griddd"} item>
                         <Machine key={e.Ident+"machineee"} m={e}/>
