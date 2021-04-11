@@ -2,13 +2,13 @@ import React from 'react';
 import MGrid from './components/MGrid/MGrid';
 import './App.css';
 
-import Machine, { machine } from './components/Machine';
+import { machine } from './components/Machine';
 
-export default function App() { //networks) {
+export default function App() {
   const [ms, setMachines] = React.useState(new Map<string, machine>());
   
   React.useEffect(() => {
-    const socket = new WebSocket('ws://jasonthel.in:8080/ws');
+    const socket = new WebSocket('ws://localhost:8080/ws');
 
     socket.addEventListener('open', (e) => {
       console.log('WS connected!');
@@ -43,7 +43,7 @@ export default function App() { //networks) {
             const mInfo: machine = data.Data;
 
             prev.set(mInfo.Ident, mInfo);
-            return new Map<string, machine>(prev); // what the f***?
+            return new Map<string, machine>(prev);
           });
           break;
 
@@ -57,7 +57,7 @@ export default function App() { //networks) {
     <div className="App">
       <header className="App-header">
         <h1>LAN-1</h1>
-          <MGrid key="MGrid" inv={ms} />
+          <MGrid key="MGrid" invP={ms} invS={ms}/>
       </header>
     </div>
   );

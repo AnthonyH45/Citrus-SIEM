@@ -71,7 +71,7 @@ func RecvData(w http.ResponseWriter, r *http.Request) {
 	//set default post values
 	fill_defaults(&d)
 
-	d.IP = r.RemoteAddr[:strings.LastIndex(r.RemoteAddr, ":")]
+	d.IP = "10.0.0.3" //r.RemoteAddr[:strings.LastIndex(r.RemoteAddr, ":")]
 	d.Ident = d.Hostname + "@" + d.IP
 	d.Updated = time.Now()
 	machines[d.Ident] = d
@@ -97,6 +97,7 @@ func RecvListeningPorts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	fmt.Println("RCVPORTS FROM:", strings.Split(r.RemoteAddr, ":")[0])
 	bodyBytes, _ := ioutil.ReadAll(r.Body)
 	body := string(bodyBytes)
 
@@ -119,7 +120,17 @@ func RecvListeningPorts(w http.ResponseWriter, r *http.Request) {
 			ActiveConnArr = append(ActiveConnArr, tmp)
 		}
 
-		fmt.Println(ActiveConnArr)
+		ra := strings.Split(r.RemoteAddr, ":")[0]
+		for _, i := range machines {
+			fmt.Println("Checking", i.IP)
+			if i.IP == ra {
+				fmt.Println("found match")
+				i.Cons = ActiveConnArr
+				fmt.Println(i)
+				return
+			}
+		}
+
 	default:
 		fmt.Println("Data Not Recognized")
 
