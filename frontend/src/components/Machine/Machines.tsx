@@ -42,25 +42,25 @@ export interface machine {
 
 interface Props {
   m: machine,
-  key?: string
+  key: string
 }
 
-export default function Machine({key, m}: Props) {
+export default function Machine(props: Props) {
   const classes = useStyles();
 
-  console.log(m)
+  console.log(props.m);
 
   return (
-    <Card className={classes.root} key={key}>
+    <Card className={classes.root}>
       <CardContent>
         <Typography className={classes.title} color="textSecondary" gutterBottom>
-          {m.Uptime}
+          {props.m.Uptime}
         </Typography>
         <Typography variant="h5" component="h2">
-          <span className={(m.On === "1") ? classes.alive:classes.dead}>•</span> {m.Hostname}
+          <span className={(props.m.On === "1") ? classes.alive:classes.dead}>•</span> {props.m.Hostname}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
-          {m.IP} -- {m.OS}
+          {props.m.IP} -- {props.m.OS}
         </Typography>
       </CardContent>
     </Card>

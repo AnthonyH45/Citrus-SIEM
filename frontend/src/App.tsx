@@ -2,89 +2,63 @@ import React from 'react';
 import MGrid from './components/MGrid/MGrid';
 import './App.css';
 
-import { machine } from './components/Machine';
-
-const socket = new WebSocket('ws://localhost:8080/ws');
-
-socket.addEventListener('open', (e) => {
-  console.log('WS connected!');
-});
-
-socket.addEventListener('close', () => {
-  console.log('Websocket connection closed, refreshing page.')
-});
+import Machine, { machine } from './components/Machine';
 
 export default function App() { //networks) {
-  const [ms, setMachines] = React.useState([{
-    Uptime: "Uptime",
-    Hostname: "Hostname",
-    IP: "IP",
-    OS: "OS",
-    On: "1",
-    Ident: "id"
-  } as machine]);
+  const [ms, setMachines] = React.useState(new Map<string, machine>());
+  
+  const socket = new WebSocket('ws://172.26.47.79:8080/ws'); // hehe
 
-  const updateMachine = (mInfo: machine) => {
-    setMachines((prev: any) => { // supposed to be `: machine[]`
-      if (prev === undefined) prev = [];
-
-        for (let i = 0; i < prev.length; i++) {
-          if (prev[i].Ident === mInfo.Ident) {
-             prev[i] = mInfo;
-             return prev;
-          }
-        }
-        prev.push(mInfo);
-        return prev;
-    });
-  }
-
-  socket.addEventListener('open', (e) => {
+  React.useEffect(() => {
+    socket.addEventListener('open', (e) => {
       console.log('WS connected!');
-  });
+    });
 
-  socket.addEventListener('message', (e) => {
-    console.log(`Received: ${e.data}`);
-    
-    const data = JSON.parse(e.data);
-    switch (data.OP) {
+    socket.addEventListener('close', () => {
+      console.log('Websocket connection closed, refreshing page.')
+    });
 
-      case 'PING':
-        socket.send(JSON.stringify({
-          type: 'PONG'
-        }));
-        break;
+    socket.addEventListener('open', (e) => {
+      console.log('WS connected!');
+    });
 
-      case 'CURR_MACHINES':
-        setMachines(() => Object.values(data.Data));
-        break;
+    socket.addEventListener('message', (e) => {
+      console.log(`Received: ${e.data}`);
+      
+      const data = JSON.parse(e.data);
+      switch (data.OP) {
 
-      case 'UPDATE_MACHINE':
-        updateMachine(data.Data);
-        break;
+        case 'PING':
+          socket.send(JSON.stringify({
+            type: 'PONG'
+          }));
+          break;
 
-      default:
-        break;
-      }
-  });
+        case 'CURR_MACHINES':
+          setMachines(() => new Map<string, machine>(Object.entries(data.Data)));
+          break;
 
-  console.log("HI")
-  console.log(ms)
-  console.log("IH")
+        case 'UPDATE_MACHINE':
+          setMachines((prev) => {
+            const mInfo: machine = data.Data;
+
+            prev.set(mInfo.Ident, mInfo);
+            return new Map<string, machine>(prev); // what the f***?
+          });
+          break;
+
+        default:
+          break;
+        }
+    });
+  }, []);
 
   return (
     <div className="App">
       <header className="App-header">
         <h1>LAN-1</h1>
-        {
-          (ms === undefined) ?
-         <h2>No machines added yet!</h2> 
-         : (ms.length === 0) ?
-         <h2>No machines added yet!</h2> 
-         : <MGrid inv={ms} key="MGrid"/>
-        }
+          <MGrid key="AAAA" inv={ms} />
       </header>
     </div>
   );
 }
-
