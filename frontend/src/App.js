@@ -2,8 +2,6 @@ import React from 'react';
 import MGrid from './components/MGrid'
 import './App.css';
 
-
-
 function App() { //networks) {
   // const [machines, setMachines] = React.setState({});
 
