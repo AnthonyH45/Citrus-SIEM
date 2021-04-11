@@ -21,7 +21,7 @@ type HostData struct {
 	Release  string
 	Packages int
 	On       string
-	Cons     []ActiveConn
+	Services []ActiveConn
 
 	Ident   string // {Hostname}@{IP}
 	Updated time.Time

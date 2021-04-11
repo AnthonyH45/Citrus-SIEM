@@ -45,7 +45,12 @@ export interface machine {
   OS: string,
   On: "1" | "0",
   Ident: string
-  Services?: string[]
+  Services?: [{
+    LocalAddr: string,
+    ForAddr: string,
+    ProgName: string,
+    ConnType: string
+  }]
 }
 
 interface Props {
@@ -77,10 +82,6 @@ export default function Machine({ m }: Props) {
           {ip} -- {m.OS}
         </Typography>
 
-        {
-          (m.Services === undefined) ?
-          <b>No connections reported yet</b>
-          : (
             <Typography variant="body2" component="p">
               <List
                   component="nav" aria-labelledby="nested-list-subheader"
@@ -90,19 +91,31 @@ export default function Machine({ m }: Props) {
                   {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
                 <Collapse in={open} timeout="auto" unmountOnExit>
-                {(m.Services.map((s) => (
+                {
+                  (m.Services === undefined || m.Services === null) ?
+                  <b>No connections reported yet</b>
+                  : [(m.Services.map((s, i) => (
                     <List component="div" disablePadding>
-                        <ListItem button className={classes.nested}>
-                            <ListItemText primary={s} />
+                      <ListItemText primary={i+1} secondary="Connection#"/>
+                        <ListItem className={classes.nested}>
+                            <ListItemText primary={s.LocalAddr} secondary="LocalAddr"/>
+                        </ListItem>
+                        <ListItem className={classes.nested}>
+                            <ListItemText primary={s.ForAddr} secondary="ForAddr"/>
+                        </ListItem>
+                        <ListItem className={classes.nested}>
+                            <ListItemText primary={s.ProgName} secondary="ProgName"/>
+                        </ListItem>
+                        <ListItem className={classes.nested}>
+                            <ListItemText primary={s.ConnType} secondary="ConnType"/>
                         </ListItem>
                     </List>
-                  )))}
+                  ) ) )]}
                 </Collapse>
                 </List>
                 </Typography>
-          )
-      }
       </CardContent>
     </Card>
   );
 }
+

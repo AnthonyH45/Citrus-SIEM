@@ -121,11 +121,13 @@ func RecvListeningPorts(w http.ResponseWriter, r *http.Request) {
 		}
 
 		ra := strings.Split(r.RemoteAddr, ":")[0]
-		for _, i := range machines {
-			fmt.Println("Checking", i.IP)
-			if i.IP == ra {
+		for i := range machines {
+			fmt.Println("Checking", machines[i].IP)
+			if machines[i].IP == ra {
 				fmt.Println("found match")
-				i.Cons = ActiveConnArr
+				j := machines[i]
+				j.Services = ActiveConnArr
+				machines[i] = j
 				fmt.Println(i)
 				return
 			}
