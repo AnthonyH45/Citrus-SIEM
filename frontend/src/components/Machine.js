@@ -4,11 +4,11 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import ListItemText from '@material-ui/core/ListItemText';
-import Collapse from '@material-ui/core/Collapse';
-import ExpandLess from '@material-ui/icons/ExpandLess';
-import ExpandMore from '@material-ui/icons/ExpandMore';
+// import ListItem from '@material-ui/core/ListItem';
+// import ListItemText from '@material-ui/core/ListItemText';
+// import Collapse from '@material-ui/core/Collapse';
+// import ExpandLess from '@material-ui/icons/ExpandLess';
+// import ExpandMore from '@material-ui/icons/ExpandMore';
 
 const useStyles = makeStyles({
   root: {
@@ -35,12 +35,12 @@ const useStyles = makeStyles({
 function Machine(m) {
   const { machine } = m;
   const classes = useStyles();
-  const [open, setOpen] = React.useState(false);
+  // const [open, setOpen] = React.useState(false);
   const bull = <span className={classes.bullet}>•</span>;
 
-  const handleClick = () => {
-    setOpen(!open);
-  };
+  // const handleClick = () => {
+  //   setOpen(!open);
+  // };
 
   console.log(m)
 
@@ -48,10 +48,10 @@ function Machine(m) {
         <Card className={classes.root}>
             <CardContent>
             <Typography className={classes.title} color="textSecondary" gutterBottom>
-                {machine.Network}
+                {machine.Uptime}
             </Typography>
             <Typography variant="h5" component="h2">
-                {bull} {machine.Name}
+                {bull} {machine.Hostname}
             </Typography>
             <Typography className={classes.pos} color="textSecondary">
                 {machine.IP} -- {machine.OS}
@@ -60,14 +60,14 @@ function Machine(m) {
               <List
                   component="nav" aria-labelledby="nested-list-subheader"
               >
-                <ListItem button onClick={handleClick}>
+                {/* <ListItem button onClick={handleClick}>
                     <ListItemText primary="Services" />
                     {open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
 
-                <Collapse in={open} timeout="auto" unmountOnExit>
+                <Collapse in={open} timeout="auto" unmountOnExit> */}
               
-                </Collapse>
+                {/* </Collapse> */}
                 </List>
                 </Typography>
         </CardContent>

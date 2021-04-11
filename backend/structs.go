@@ -5,9 +5,9 @@ type Message struct {
 	Data interface{}
 }
 
-type RunningServicesData struct {
-	services []string
-}
+// type RunningServicesData struct {
+// 	services []string
+// }
 
 type HostData struct {
 	Hostname string

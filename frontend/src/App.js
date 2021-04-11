@@ -9,7 +9,7 @@ socket.addEventListener('open', (e) => {
 });
 
 socket.addEventListener('close', () => {
-  alert('Websocket connection closed, refreshing page.')
+  console.log('Websocket connection closed, refreshing page.')
   // location.reload();
 });
 

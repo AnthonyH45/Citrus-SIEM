@@ -71,7 +71,7 @@ func RecvData(w http.ResponseWriter, r *http.Request) {
 
 	broadcast(Message{
 		"UPDATE_MACHINE",
-		d,
+		r.Body,
 	})
 
 	//resend post data for debugging purposes
