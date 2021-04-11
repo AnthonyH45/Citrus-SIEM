@@ -6,6 +6,7 @@ import (
 	"io/ioutil"
 	"net/http"
 	"strings"
+	"time"
 )
 
 func fill_defaults(std *HostData) {
@@ -70,8 +71,9 @@ func RecvData(w http.ResponseWriter, r *http.Request) {
 	//set default post values
 	fill_defaults(&d)
 
-	d.IP = r.RemoteAddr[:strings.LastIndex(r.RemoteAddr, ":")]
+	d.IP = "10.0.0.3" //r.RemoteAddr[:strings.LastIndex(r.RemoteAddr, ":")]
 	d.Ident = d.Hostname + "@" + d.IP
+	d.Updated = time.Now()
 	machines[d.Ident] = d
 
 	broadcast(Message{
@@ -95,6 +97,7 @@ func RecvListeningPorts(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	fmt.Println("RCVPORTS FROM:", strings.Split(r.RemoteAddr, ":")[0])
 	bodyBytes, _ := ioutil.ReadAll(r.Body)
 	body := string(bodyBytes)
 
@@ -117,24 +120,21 @@ func RecvListeningPorts(w http.ResponseWriter, r *http.Request) {
 			ActiveConnArr = append(ActiveConnArr, tmp)
 		}
 
-		fmt.Println(ActiveConnArr)
+		ra := strings.Split(r.RemoteAddr, ":")[0]
+		for i := range machines {
+			fmt.Println("Checking", machines[i].IP)
+			if machines[i].IP == ra {
+				fmt.Println("found match")
+				j := machines[i]
+				j.Services = ActiveConnArr
+				machines[i] = j
+				fmt.Println(i)
+				return
+			}
+		}
+
 	default:
 		fmt.Println("Data Not Recognized")
 
 	}
-
-	// fmt.Println(body)
-
-	//for 0 -> 14, it is garbage
-	//arr := strings.Split(body, "\n")
-
-	// if arr[0] == "Active" && arr[1] == "Internet" {
-	// 	fmt.Println("Netstat Detected")
-	// 	index := 0
-	// 	for _, field := range fields[:] {
-	// 		if(index>14) {
-
-	// 		}
-	// 	}
-	// }
 }

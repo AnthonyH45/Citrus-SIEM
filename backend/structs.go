@@ -1,5 +1,9 @@
 package backend
 
+import (
+	"time"
+)
+
 type Message struct {
 	OP   string
 	Data interface{}
@@ -17,8 +21,11 @@ type HostData struct {
 	Release  string
 	Packages int
 	On       string
+	Garb     string
+	Services []ActiveConn
 
-	Ident string // {Hostname}@{IP}
+	Ident   string // {Hostname}@{IP}
+	Updated time.Time
 }
 
 type ActiveConn struct {
