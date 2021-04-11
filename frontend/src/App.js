@@ -53,8 +53,6 @@ function App() { //networks) {
       }
   });
 
-
-
   return (
     <div className="App">
       <header className="App-header">

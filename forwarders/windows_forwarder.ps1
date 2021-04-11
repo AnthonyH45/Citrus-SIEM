@@ -1,5 +1,5 @@
-$RECV_HOST = "192.168.1.71"
-$RECV_PORT = "8000"
+$RECV_HOST = "10.0.0.3"
+$RECV_PORT = "8080"
 $URL = 'http://' + $RECV_HOST + ':' + $RECV_PORT + '/endpoint'
 
 while($true) {
