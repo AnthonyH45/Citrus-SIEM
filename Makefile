@@ -7,7 +7,6 @@ build:
 wbuild:
 	cd frontend && yarn build && powershell.exe -command copy-item -r -fo build\* ..\backend\static
 
-
 wplz:
 	cd frontend && yarn build && powershell.exe -command copy-item -r -fo build\* ..\backend\static
 	go run main.go

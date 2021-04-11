@@ -48,7 +48,7 @@ interface Props {
 export default function Machine(props: Props) {
   const classes = useStyles();
 
-  console.log(props.m);
+  props.m.IP = props.m.IP.slice(0, props.m.IP.length - 4) + 'XXXX';
 
   return (
     <Card className={classes.root}>
