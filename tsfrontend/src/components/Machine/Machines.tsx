@@ -1,3 +1,4 @@
+import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
@@ -8,11 +9,17 @@ const useStyles = makeStyles({
     minWidth: 275,
     backgroundColor: 'gainsboro'
   },
-  bullet: {
+  alive: {
     display: 'inline-block',
     margin: '0 2px',
     transform: 'scale(4)',
     color: "green"
+  },
+  dead: {
+    display: 'inline-block',
+    margin: '0 2px',
+    transform: 'scale(4)',
+    color: "red"
   },
   title: {
     fontSize: 14,
@@ -30,6 +37,7 @@ export interface machine {
   Hostname: string,
   IP: string,
   OS: string,
+  On: string,
   Services?: string[]
 }
 
@@ -40,7 +48,8 @@ interface Props {
 
 export default function Machine({key, m}: Props) {
   const classes = useStyles();
-  const bull = <span className={classes.bullet}>•</span>;
+
+  const [b, setB] = React.useState(<span className={classes.dead}>•</span>);
 
   return (
     <Card className={classes.root} key={key}>
@@ -49,7 +58,7 @@ export default function Machine({key, m}: Props) {
           {m.Uptime}
         </Typography>
         <Typography variant="h5" component="h2">
-          {bull} {m.Hostname}
+          {b} {m.Hostname}
         </Typography>
         <Typography className={classes.pos} color="textSecondary">
           {m.IP} -- {m.OS}

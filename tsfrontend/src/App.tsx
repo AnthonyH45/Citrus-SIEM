@@ -1,5 +1,5 @@
 import React from 'react';
-import MGrid from './components/MGrid/MGrid'
+import MGrid from './components/MGrid/MGrid';
 import './App.css';
 
 import { machine } from './components/Machine';
